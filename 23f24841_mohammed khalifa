@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int verifyAndRouteSource(int sourceType, int totalRecords) {
+    int executionStatus = 0; // 0: Failed, 1: Processed, 2: Flagged/Quarantined
+    
+    // Switch block to evaluate the type of ingestion provider
+    switch(sourceType) {
+        case 1: // Commercial Job Boards (e.g., LinkedIn, Indeed)
+            printf("Processing Commercial Job Board Payload...\n");
+            if (totalRecords > 1000) {
+                executionStatus = 1; // Standard Bulk Process
+            } else {
+                executionStatus = 2; // Flagged due to low volume anomaly
+            }
+            break;
+            
+        case 2: // Government Labor Statistics Data
+            printf("Processing Government Statistical Bureau Payload...\n");
+            if (totalRecords > 0) {
+                executionStatus = 1; // Valid Data Feed
+            } else {
+                executionStatus = 0; // Completely empty feed failure
+            }
+            break;
+            
+        default: // Unknown or unauthorized feed origin
+            printf("Unauthorized Source Type Detected!\n");
+            executionStatus = 0;
+            break;
+    }
+    
+    return executionStatus;
+}
