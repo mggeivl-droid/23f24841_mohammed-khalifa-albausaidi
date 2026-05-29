@@ -5,15 +5,16 @@ int verifyAndRouteSource(int sourceType, int totalRecords) {
     
     // Switch block to evaluate the type of ingestion provider
     switch(sourceType) {
-        case 1: // Commercial Job Boards (e.g., LinkedIn, Indeed)
+      case 1: // Commercial Job Boards (e.g., LinkedIn, Indeed)
             printf("Processing Commercial Job Board Payload...\n");
-            if (totalRecords > 1000) {
+            
+            // MINOR MODIFICATION: Changed threshold from '>' to '>=' to include edge case boundary
+            if (totalRecords >= 1000) {
                 executionStatus = 1; // Standard Bulk Process
             } else {
                 executionStatus = 2; // Flagged due to low volume anomaly
             }
             break;
-            
         case 2: // Government Labor Statistics Data
             printf("Processing Government Statistical Bureau Payload...\n");
             if (totalRecords > 0) {
