@@ -7,13 +7,15 @@ int verifyAndRouteSource(int sourceType, int totalRecords) {
     switch(sourceType) {
         case 1: // Commercial Job Boards (e.g., LinkedIn, Indeed)
             printf("Processing Commercial Job Board Payload...\n");
+            // MINOR MODIFICATION: Added an extra logging print statement
+            printf("Log: Verifying volume threshold for %d records.\n", totalRecords);
+            
             if (totalRecords > 1000) {
-                executionStatus = 1; // Standard Bulk Process
+                executionStatus = 1; 
             } else {
-                executionStatus = 2; // Flagged due to low volume anomaly
+                executionStatus = 2; 
             }
             break;
-            
         case 2: // Government Labor Statistics Data
             printf("Processing Government Statistical Bureau Payload...\n");
             if (totalRecords > 0) {
